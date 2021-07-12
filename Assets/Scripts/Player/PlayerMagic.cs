@@ -25,8 +25,17 @@ public class PlayerMagic : MonoBehaviour
         UIManager.instance.UpdateMagicUI(currentMagic.magicName);
     }
 
+    private void Attack()
+    {
+        if (playerInput.isClickedT && currentMagic != null)
+        {
+            currentMagic.MagicEnable();
+        }
+    }
+
     private void Update()
     {
         SetMagic();
+        Attack();
     }
 }

@@ -42,7 +42,7 @@ public class MagicManager : MonoBehaviour
 
     private void InitializeStorage()
     {
-        magicStorage.Add(new InputData(2, 0, 0), this.gameObject.AddComponent<FireBall>()); // new keyword는 허락되지 않음.(MonoBehavior때문), AddComponent 사용
+        magicStorage.Add(new InputData(0, 0), this.gameObject.AddComponent<FireBall>()); // new keyword는 허락되지 않음.(MonoBehavior때문), AddComponent 사용
     }
 
     public Magic GetMagicFromInputData(InputData input)

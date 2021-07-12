@@ -5,15 +5,13 @@ using UnityEngine.Scripting;
 
 public struct InputData
 {
-    public int qCount;
-    public int wCount;
-    public int eCount;
+    public int firstClick;
+    public int secondClick;
 
-    public InputData(int q, int w, int e)
+    public InputData(int first, int second)
     {
-        this.qCount = q;
-        this.wCount = w;
-        this.eCount = e;
+        firstClick = first;
+        secondClick = second;
     }
 }
 
@@ -28,49 +26,61 @@ public class PlayerInput : MonoBehaviour
         private set { _currentInputData = value; }
     }
 
+    private bool _isClickedT;
+    public bool isClickedT { get; private set; }
+
     private void Start()
     {
-        _currentInputData = new InputData(0, 0, 0);
+        _currentInputData = new InputData(-1, -1);
+        isClickedT = false;
     }
 
     private void Update()
     {
         SetInput();
         Initialize();
+        ClickT();
         if (Input.anyKeyDown)
             ForDebugging();
     }
 
     public void SetInput()
     {
-        if (Input.GetKeyDown(KeyCode.Q))
-            _currentInputData.qCount += 1;
-        else if (Input.GetKeyDown(KeyCode.W))
-            _currentInputData.wCount += 1;
-        else if (Input.GetKeyDown(KeyCode.E))
-            _currentInputData.eCount += 1;
+        if (_currentInputData.firstClick == -1)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                _currentInputData.firstClick = 0;
+            else if (Input.GetKeyDown(KeyCode.R))
+                _currentInputData.firstClick = 1;
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+                _currentInputData.secondClick = 0;
+            else if (Input.GetKeyDown(KeyCode.R))
+                _currentInputData.secondClick = 1;
+        }
     }
 
     public void Initialize()
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            _currentInputData.qCount = 0;
-            _currentInputData.wCount = 0;
-            _currentInputData.eCount = 0;
+            _currentInputData.firstClick = -1;
+            _currentInputData.secondClick = -1;
             UIManager.instance.UpdateMagicUI("Null"); // 변경해야함. 이렇게 하는게 아닌 것 같음.
         }
     }
 
-    public void ClickR()
+    public void ClickT()
     {
-        // 마법 발동 코드 입력
+        isClickedT = Input.GetKeyDown(KeyCode.T);
     }
 
     private void ForDebugging()
     {
-        Debug.Log("QCount: " + _currentInputData.qCount);
-        Debug.Log("WCount: " + _currentInputData.wCount);
-        Debug.Log("ECount: " + _currentInputData.eCount);
+        Debug.Log("First Click: " + _currentInputData.firstClick);
+        Debug.Log("Second Click: " + _currentInputData.secondClick);
     }
 }
+

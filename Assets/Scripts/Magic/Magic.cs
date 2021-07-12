@@ -13,6 +13,10 @@ public abstract class Magic : MonoBehaviour
     protected Sprite magicSprite;
     [SerializeField]
     protected Sprite magicTypeSprite;
+    [SerializeField]
+    protected GameObject currentMonster;
+
+    protected MonsterController currentMonsterController;
 
     public string magicName
     {

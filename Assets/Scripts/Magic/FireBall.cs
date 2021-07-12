@@ -2,23 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBall : Magic, IDamageable
+public class FireBall : Magic
 {
-    [SerializeField]
-    private int damage;
-    public void Damage()
-    {
-        // monster.Damage(damage);
-    }
-
     private void Start()
     {
-        damage = 40;
         _magicName = "FireBall";
+        currentMonster = GameObject.Find("Slime");
+        currentMonsterController = currentMonster.GetComponent<MonsterController>();
     }
 
     public override void MagicEnable()
     {
-        Damage();
+        currentMonsterController.Die();
     }
 }
